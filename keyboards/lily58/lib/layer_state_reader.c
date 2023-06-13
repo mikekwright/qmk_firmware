@@ -2,7 +2,8 @@
 #include <stdio.h>
 
 
-#define L_QWERTY 0
+#define L_BASE   0
+#define L_QWERTY 1
 #define L_SYMBOL (1 << 1)
 #define L_FUNCS (1 << 2)
 #define L_ADJUST (1 << 3)
@@ -15,6 +16,7 @@ const char *read_layer_state(void) {
   switch (layer_state)
   {
   case L_QWERTY:
+  case L_BASE:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: QWERTY");
     break;
   case L_SYMBOL:
