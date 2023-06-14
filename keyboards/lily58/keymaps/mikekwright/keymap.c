@@ -33,49 +33,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | TAB  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * | TAB  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  '   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  '   |
+ * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  "   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  "   |
- * |------+------+------+------+------+------|_FUNCS |    |_SYMBOL|------+------+------+------+------+------|
+ * |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  | Enter|
+ * |------+------+------+------+------+------|   ~   |    |   /   |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | CAPS | LAlt |LGUI  | / Enter /      \ Space \  |_SYMBOL|BackSP| RGUI |
+ *                   | LAlt | _FUNC| Win  | / Enter /      \ Space \  |BackSP |_SYMBO| CAPS |
  *                   |      |      |      |/       /        \       \ |       |      |      |
  *                   `----------------------------'          '-------''--------------------'
  */
 
  [_QWERTY] = LAYOUT(
-  KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_GRV,
-  KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_QUOT,
-  KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_DQT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, TO(_FUNCS),  TO(_SYMBOL),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                          KC_CAPS, KC_LALT, KC_LGUI, KC_ENT,           KC_SPC, TO(_SYMBOL), KC_BSPC, KC_RGUI
+  KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_QUOT,
+  KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DQT,
+  KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_TILDE,  KC_SLSH,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                  KC_LALT, TT(_FUNCS), KC_LGUI, KC_ENT,           KC_SPC, KC_BSPC, TT(_SYMBOL), KC_CAPS
 ),
 
 
 
 /* SYMBOL
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * | TAB  |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   `  |   ~  |      |   <  |   >  |                    |      |   -  |   +  |   [  |   ]  |   \  |
+ * | ESC  |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  |   \  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   |  |
- * |------+------+------+------+------+------|_FUNCS |    |       |------+------+------+------+------+------|
- * |LShift|      |      |      |      |      |-------|    |-------|      |   _  |   =  |   {  |   }  |RShift|
+ * |LCTRL |   `  |   ~  |   ?  |   <  |   >  |-------.    ,-------|   :  |   -  |   +  |   [  |   ]  |   |  |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |LShift|      |      |      |      | Enter|-------|    |-------| Enter|   _  |   =  |   {  |   }  |RShift|
  * `-----------------------------------------/       /    \       \-----------------------------------------'
- *                  | LAlt | LGUI |_FUNCS | / Enter /      \ Space \  |_QWERTY|BackSP| RGUI |
- *                  |      |      |       |/       /        \       \ |       |      |      |
- *                  `-----------------------------'          '-------''--------------------'
+ *                  | LAlt |_FUNC |  Win  | / Space /      \ Space \  |BackSP |_QWERTY| RAlt |
+ *                  |      |      |       |/       /        \       \ |       |       |      |
+ *                  `-----------------------------'          '-------''----------------------'
  */
 [_SYMBOL] = LAYOUT(
- XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  KC_ESC, KC_GRAVE, KC_TILDE, XXXXXXX,   KC_LT,   KC_GT,                      XXXXXXX, KC_MINS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS,
- KC_LCTL,  KC_EXLM,    KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
- KC_LSFT,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_FUNCS), XXXXXXX, XXXXXXX, KC_UNDS,  KC_EQL, KC_LCBR, KC_RCBR, KC_RSFT,
-                           KC_LGUI, KC_LALT, TO(_FUNCS), KC_ENT,          KC_SPC, TO(_QWERTY), KC_BSPC, KC_RGUI
+  KC_TAB,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  KC_ESC,  KC_EXLM,    KC_AT, KC_HASH,  KC_DLR, KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS,
+ KC_LCTL, KC_GRAVE, KC_TILDE, KC_QUES,   KC_LT,   KC_GT,                  KC_COLON, KC_MINS, KC_PLUS, KC_LBRC, KC_RBRC, KC_PIPE,
+ KC_LSFT,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  KC_ENT, XXXXXXX, XXXXXXX,  KC_ENT, KC_UNDS,  KC_EQL, KC_LCBR, KC_RCBR, KC_RSFT,
+                           KC_LALT, TT(_FUNCS), KC_LGUI, KC_SPC,          KC_SPC, KC_BSPC, TO(_QWERTY), KC_RALT
 ),
 
 
@@ -83,24 +83,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* FUNCS
  * ,------------------------------------------.                    ,-----------------------------------------.
- * | ESC  |  RGB  |RGBMOD|      |      |      |                    |      |      |      |      |      |      |
+ * |      |  RGB  |RGBMOD|      |      |      |                    |      |      |      |      |      |      |
  * |------+-------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  F2   |  F3  |  F1  |  F2  |  F3  |                    |  F7  |  F8  |  F9  | F10  |  F11 | F12  |
  * |------+-------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |   1   |   2  |  3   |  4   |  5   |-------.    ,-------|   6  |   7  |   8  |   9  |   0  |      |
- * |------+-------+------+------+------+------|       |    |_SYMBOL|------+------+------+------+------+------|
- * |LShift|   !   |   @  |  #   |  $   |  %   |-------|    |-------|   ^  |   &  |   *  |   (  |   )  |RShift|
- * `------------------------------------------/       /    \       \-----------------------------------------'
- *                  | LAlt | LGUI |_SYMBOL| / Enter /      \ Space \  |_QWERTY|BackSP| RGUI |
- *                  |      |      |       |/       /        \       \ |       |      |      |
- *                  `-----------------------------'          '-------''--------------------'
+ * |LCTRL |  Left | Down |  Up  |Right |      |-------.    ,-------| Left | Down |  Up  |Right | Enter|      |
+ * |------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |LShift|   1   |   2  |  3   |  4   |  5   |-------|    |-------|   6  |   7  |   8  |   9  |   0  |RShift|
+ * `------------------------------------------/      /     \       \-----------------------------------------'
+ *                 | LAlt |_SYMBOL|  Win  | / Space /       \ Space \   |BackSP|_QWERTY| RAlt |
+ *                 |      |       |       |/       /         \       \ |       |       |      |
+ *                 `------------------------------'           '-------''----------------------'
  */
 [_FUNCS] = LAYOUT(
-  KC_ESC, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                          KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
- KC_LCTL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,
- KC_LSFT, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, XXXXXXX,  TO(_SYMBOL), KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_RSFT,
-                        KC_LGUI, KC_LALT, TO(_SYMBOL),  KC_ENT,       KC_SPC, TO(_QWERTY), KC_BSPC, KC_RGUI
+ XXXXXXX, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+ KC_LCTL, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,                    KC_LEFT, KC_DOWN,   KC_UP, KC_RIGHT,  KC_ENT, XXXXXXX,
+ KC_LSFT,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,  XXXXXXX,    KC_6,    KC_7,    KC_8,     KC_9,    KC_0, KC_RSFT,
+                      KC_LALT, TT(_SYMBOL), KC_LGUI, KC_SPC,    KC_SPC, KC_BSPC, TO(_QWERTY), KC_RALT
 ),
 
 
