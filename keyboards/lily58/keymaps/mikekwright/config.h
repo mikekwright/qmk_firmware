@@ -52,3 +52,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLED_NUM 14    // Number of LEDs
 #define RGBLIGHT_SLEEP
 */
+
+//
+// How to add more then just 3 or 4 layers
+//   https://www.reddit.com/r/MechanicalKeyboards/comments/mq3n12/via_how_to_add_more_than_4_layers/
+// I am not sure if this works with my current setup or if I need to VIA it a bit
+//
+//#define DYNAMIC_KEYMAP_LAYER_COUNT 5
+
