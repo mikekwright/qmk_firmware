@@ -18,6 +18,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+#define LEFT_SCROLL_SCALE 512
+#define RIGHT_CURSOR_SCALE 1280
+#define LEFT_SCROLL_DIVISOR_H 8
+#define LEFT_SCROLL_DIVISOR_V 8
+
+static int16_t left_scroll_remainder_h = 0;
+static int16_t left_scroll_remainder_v = 0;
+
+void keyboard_post_init_user(void) {
+    pointing_device_set_cpi_on_side(true, LEFT_SCROLL_SCALE);
+    pointing_device_set_cpi_on_side(false, RIGHT_CURSOR_SCALE);
+}
+
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    int16_t left_scroll_h;
+    int16_t left_scroll_v;
+
+    left_scroll_remainder_h += left_report.x;
+    left_scroll_remainder_v += left_report.y;
+
+    left_scroll_h = left_scroll_remainder_h / LEFT_SCROLL_DIVISOR_H;
+    left_scroll_v = left_scroll_remainder_v / LEFT_SCROLL_DIVISOR_V;
+
+    left_scroll_remainder_h -= left_scroll_h * LEFT_SCROLL_DIVISOR_H;
+    left_scroll_remainder_v -= left_scroll_v * LEFT_SCROLL_DIVISOR_V;
+
+    left_report.h = left_scroll_h;
+    left_report.v = left_scroll_v;
+    left_report.buttons = 0;
+    left_report.x = 0;
+    left_report.y = 0;
+
+    return pointing_device_combine_reports(left_report, right_report);
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
