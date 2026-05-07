@@ -18,10 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-#ifdef CONSOLE_ENABLE
-#    include "print.h"
-#endif
-
 #define LEFT_SCROLL_SCALE 512
 #define RIGHT_CURSOR_SCALE 1280
 #define LEFT_SCROLL_DIVISOR_H 16
@@ -52,38 +48,15 @@ static report_mouse_t rotate_right_report(report_mouse_t report) {
 }
 
 void keyboard_post_init_user(void) {
-    debug_enable = true;
-    debug_mouse  = true;
-
-#ifdef CONSOLE_ENABLE
-    uprintf("post_init master=%u left=%u status=%u\n", is_keyboard_master(), is_keyboard_left(), pointing_device_get_status());
-#endif
-
     pointing_device_set_cpi_on_side(true, LEFT_SCROLL_SCALE);
     pointing_device_set_cpi_on_side(false, RIGHT_CURSOR_SCALE);
-}
-
-void pointing_device_init_user(void) {
-#ifdef CONSOLE_ENABLE
-    uprintf("pointing_init master=%u left=%u status=%u\n", is_keyboard_master(), is_keyboard_left(), pointing_device_get_status());
-#endif
 }
 
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
     int16_t left_scroll_h;
     int16_t left_scroll_v;
 
-#ifdef CONSOLE_ENABLE
-    report_mouse_t raw_right_report = right_report;
-#endif
-
     right_report = rotate_right_report(right_report);
-
-#ifdef CONSOLE_ENABLE
-    if (is_keyboard_left() && (raw_right_report.x || raw_right_report.y || raw_right_report.h || raw_right_report.v || raw_right_report.buttons)) {
-        uprintf("right_raw x=%d y=%d h=%d v=%d b=%u -> right_rot x=%d y=%d h=%d v=%d b=%u\n", raw_right_report.x, raw_right_report.y, raw_right_report.h, raw_right_report.v, raw_right_report.buttons, right_report.x, right_report.y, right_report.h, right_report.v, right_report.buttons);
-    }
-#endif
 
     left_scroll_remainder_h += left_report.x;
     left_scroll_remainder_v += left_report.y;

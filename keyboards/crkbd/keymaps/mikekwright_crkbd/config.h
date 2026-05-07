@@ -29,7 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SPLIT_POINTING_ENABLE
 #define POINTING_DEVICE_COMBINED
-#define POINTING_DEVICE_DEBUG
 #define POINTING_DEVICE_ROTATION_90
 
 #define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_2X
