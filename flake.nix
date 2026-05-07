@@ -30,14 +30,17 @@
                 cp "$firmware_base.hex" "$firmware_base-right.hex"
                 cp "quantum/split_common/eeprom-righthand.eep" "$firmware_base-right.eep"
                 ;;
+              lily58)
+                qmk compile -kb lily58/rev1 -km mikekwright
+                ;;
               "")
                 echo "Usage: build-keyboard <keyboard>" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
               *)
                 echo "Unknown keyboard: $keyboard" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
             esac
@@ -56,14 +59,17 @@
               corne)
                 exec git submodule update --init --recursive -- lib/lufa
                 ;;
+              lily58)
+                true
+                ;;
               "")
                 echo "Usage: setup-keyboard <keyboard>" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
               *)
                 echo "Unknown keyboard: $keyboard" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
             esac
@@ -99,14 +105,21 @@
                     ;;
                 esac
                 ;;
+              lily58)
+                if [ -n "$side" ]; then
+                  echo "Usage: flash-keyboard lily58" >&2
+                  exit 1
+                fi
+                exec qmk flash -kb lily58/rev1 -km mikekwright
+                ;;
               "")
                 echo "Usage: flash-keyboard <keyboard> [side]" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
               *)
                 echo "Unknown keyboard: $keyboard" >&2
-                echo "Available keyboards: corne" >&2
+                echo "Available keyboards: corne, lily58" >&2
                 exit 1
                 ;;
             esac

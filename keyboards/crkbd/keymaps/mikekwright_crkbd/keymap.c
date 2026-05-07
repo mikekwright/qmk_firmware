@@ -90,9 +90,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-// Tab, 1, 2, 3, 4, 5,                   6, 7, 8, 9, 0, Tab
-// ?, Left, Down, Up, Right, ?,       Left, Down, Up, Right, Ent, "
-//
+// Tab, 1, 2, 3, 4, 5,                         6, 7, 8, 9, 0, Tab
+// LCtrl, Mouse, Btn1, Btn3, Btn2, Mouse,   Left, Down, Up, Right, Enter, "
+// F1, F2, F3, F4, F5, F6,                   F7, F8, F9, F10, F11, F12
+// LGui, TRNS, Enter,                        Space, Bspc, Raise
 
 
     [1] = LAYOUT_split_3x6_3(
@@ -104,8 +105,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_ENT,     KC_SPC, KC_BSPC,   MO(2)
-                                      //`--------------------------'  `--------------------------'
+                                       //`--------------------------'  `--------------------------'
   ),
+
+// Esc, !, @, #, $, %,                         ^, &, *, (, ), \
+// LCtrl, `, ~, ?, <, >,                     :, -, +, [, ], |
+// LShift, NO, NO, NO, NO, NO,               -, _, =, {, }, NO
+// LGui, Lower, Enter,                       Space, Bspc, TRNS
 
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -116,8 +122,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS, KC_UNDS,  KC_EQL, KC_LCBR, KC_RCBR, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(1),  KC_ENT,     KC_SPC, KC_BSPC, _______
-                                      //`--------------------------'  `--------------------------'
+                                       //`--------------------------'  `--------------------------'
   ),
+
+// NO, NO, NO, NO, NO, NO,                    NO, WheelL, WheelU, WheelR, NO, NO
+// NO, NO, NO, NO, NO, NO,                    MouseL, MouseD, MouseU, MouseR, NO, NO
+// NO, NO, NO, NO, NO, NO,                    NO, Btn1, WheelD, Btn2, NO, NO
+// LGui, TRNS, Space,                        Enter, TRNS, RAlt
 
     [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
