@@ -116,6 +116,7 @@
       in {
         packages.build-keyboard = build-keyboard;
         packages.setup-keyboard = setup-keyboard;
+        packages.flash-keyboard = flash-keyboard;
 
         apps = {
           build-keyboard = {
@@ -148,6 +149,7 @@
             pkgs.pkgsCross.arm-embedded.buildPackages.gcc
             setup-keyboard
             build-keyboard
+            flash-keyboard
           ];
 
           MAKE = "make";

@@ -19,15 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #define LEFT_SCROLL_SCALE 512
-#define RIGHT_CURSOR_SCALE 1280
-#define LEFT_SCROLL_DIVISOR_H 16
-#define LEFT_SCROLL_DIVISOR_V 16
+#define RIGHT_CURSOR_SCALE ((1280 * MIKEKWRIGHT_MOUSE_SPEED) / 10)
+#define LEFT_SCROLL_DIVISOR_H (16 * 10)
+#define LEFT_SCROLL_DIVISOR_V (16 * 10)
 #define RIGHT_CURSOR_ROTATION_SCALE 1024
 #define RIGHT_CURSOR_ROTATION_COS 989
 #define RIGHT_CURSOR_ROTATION_SIN 265
 
-static int16_t left_scroll_remainder_h = 0;
-static int16_t left_scroll_remainder_v = 0;
+static int32_t left_scroll_remainder_h = 0;
+static int32_t left_scroll_remainder_v = 0;
 
 static int16_t div_round_nearest(int32_t value, int16_t divisor) {
     if (value >= 0) {
@@ -58,8 +58,8 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
 
     right_report = rotate_right_report(right_report);
 
-    left_scroll_remainder_h += left_report.x;
-    left_scroll_remainder_v += left_report.y;
+    left_scroll_remainder_h += (int32_t)left_report.x * MIKEKWRIGHT_SCROLL_SPEED;
+    left_scroll_remainder_v += (int32_t)left_report.y * MIKEKWRIGHT_SCROLL_SPEED;
 
     left_scroll_h = left_scroll_remainder_h / LEFT_SCROLL_DIVISOR_H;
     left_scroll_v = left_scroll_remainder_v / LEFT_SCROLL_DIVISOR_V;
