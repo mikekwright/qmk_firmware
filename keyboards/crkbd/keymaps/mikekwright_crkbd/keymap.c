@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 static int32_t left_scroll_remainder_h = 0;
 static int32_t left_scroll_remainder_v = 0;
+static uint8_t held_mouse_buttons = 0;
 
 static int16_t div_round_nearest(int32_t value, int16_t divisor) {
     if (value >= 0) {
@@ -47,6 +48,21 @@ static report_mouse_t rotate_right_report(report_mouse_t report) {
     return report;
 }
 
+static void set_held_mouse_button(uint8_t mouse_button, bool pressed) {
+    report_mouse_t report = pointing_device_get_report();
+
+    if (pressed) {
+        held_mouse_buttons |= mouse_button;
+        report.buttons |= mouse_button;
+    } else {
+        held_mouse_buttons &= ~mouse_button;
+        report.buttons &= ~mouse_button;
+    }
+
+    pointing_device_set_report(report);
+    pointing_device_send();
+}
+
 void keyboard_post_init_user(void) {
     pointing_device_set_cpi_on_side(true, LEFT_SCROLL_SCALE);
     pointing_device_set_cpi_on_side(false, RIGHT_CURSOR_SCALE);
@@ -55,6 +71,7 @@ void keyboard_post_init_user(void) {
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
     int16_t left_scroll_h;
     int16_t left_scroll_v;
+    report_mouse_t combined_report;
 
     right_report = rotate_right_report(right_report);
 
@@ -73,8 +90,41 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
     left_report.x = 0;
     left_report.y = 0;
 
-    return pointing_device_combine_reports(left_report, right_report);
+    combined_report = pointing_device_combine_reports(left_report, right_report);
+    combined_report.buttons |= held_mouse_buttons;
+
+    return combined_report;
 }
+
+
+enum custom_keycodes {
+    MY_BTN1 = SAFE_RANGE,
+    MY_BTN2,
+    MY_BTN3,
+};
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MS_BTN1:
+        case MY_BTN1: {
+            set_held_mouse_button(MOUSE_BTN1, record->event.pressed);
+            return false;
+        }
+        case MS_BTN2:
+        case MY_BTN2: {
+            set_held_mouse_button(MOUSE_BTN2, record->event.pressed);
+            return false;
+        }
+        case MS_BTN3:
+        case MY_BTN3: {
+            set_held_mouse_button(MOUSE_BTN3, record->event.pressed);
+            return false;
+        }
+    }
+    return true;
+}
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3(
@@ -90,28 +140,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-// Tab, 1, 2, 3, 4, 5,                         6, 7, 8, 9, 0, Tab
-// LCtrl, Mouse, Btn1, Btn3, Btn2, Mouse,   Left, Down, Up, Right, Enter, "
-// F1, F2, F3, F4, F5, F6,                   F7, F8, F9, F10, F11, F12
-// LGui, TRNS, Enter,                        Space, Bspc, Raise
-
-
     [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_TAB,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,   MO(3), MS_BTN1, MS_BTN3, MS_BTN2,   MO(3),                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT,  KC_ENT,  KC_DQT,
+      KC_LCTL,   MO(3), MY_BTN1, MY_BTN3, MY_BTN2,   MO(3),                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT,  KC_ENT,  KC_DQT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_ENT,     KC_SPC, KC_BSPC,   MO(2)
                                        //`--------------------------'  `--------------------------'
   ),
-
-// Esc, !, @, #, $, %,                         ^, &, *, (, ), \
-// LCtrl, `, ~, ?, <, >,                     :, -, +, [, ], |
-// LShift, NO, NO, NO, NO, NO,               -, _, =, {, }, NO
-// LGui, Lower, Enter,                       Space, Bspc, TRNS
 
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -124,11 +163,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           KC_LGUI,   MO(1),  KC_ENT,     KC_SPC, KC_BSPC, _______
                                        //`--------------------------'  `--------------------------'
   ),
-
-// NO, NO, NO, NO, NO, NO,                    NO, WheelL, WheelU, WheelR, NO, NO
-// NO, NO, NO, NO, NO, NO,                    MouseL, MouseD, MouseU, MouseR, NO, NO
-// NO, NO, NO, NO, NO, NO,                    NO, Btn1, WheelD, Btn2, NO, NO
-// LGui, TRNS, Space,                        Enter, TRNS, RAlt
 
     [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
